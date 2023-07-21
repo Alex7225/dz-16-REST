@@ -1,7 +1,19 @@
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 public class RestAssuredTest {
+
+    @BeforeMethod
+    public void setup(){
+        RestAssured.baseURI = "https://restful-booker.herokuapp.com/booking";
+        RestAssured.requestSpecification = new RequestSpecBuilder()
+                .addHeader("Authorization", "Bareer ")
+                .addCookie("myCookie", "value1")
+                .addCookie("myCookie2", "value2")
+                .build();
+    }
     @Test
     public void getBookingsID(){
         Response response = RestAssured.get("https://restful-booker.herokuapp.com/booking/");
